@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Bank</title>
+    <!-- bootstrap css  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.0/css/bootstrap.min.css">
+    <!-- main CSS  -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Login Part  -->
+    <div id="login-area">
+        <div class="container">
+            <h1 class="text-center">Welcome To My Dream Bank</h1>
+            <div class="submit-area mt-5">
+                <h2>Login</h2>
+                <input type="email" name="" id="email-input" class="form-control mb-3" placeholder="Email">
+                <input type="password" name="" id="password-input" class="form-control mb-3" placeholder="Password">
+                <h6 class="mb-3"><span class="login-error">Please enter email & password</span></h6>
+                <button id="submit" class="btn btn-success">Enter</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Transaction Part  -->
+    <div id="transaction-area">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <h2 class="text-center">Account Summary</h2>
+                </div>
+            </div>
+            <!--Transaction title end-->
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="deposit">
+                        <h5>Deposit</h5>
+                        <h2>$ <span id="total-deposit">00</span></h2>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="withdraw">
+                        <h5>Withdraw</h5>
+                        <h2>$ <span id="totalWithdrawAmount">00</span></h2>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="balance">
+                        <h5>Balance</h5>
+                        <h2>$ <span id="balance">1200</span></h2>
+                    </div>
+                </div>
+            </div>
+            <!--Balance end-->
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="submit-area">
+                        <h4>Deposit</h4>
+                        <input type="text" name="" id="depositAmount" placeholder="$ amount you want to deposit"
+                            class="form-control mb-3">
+                            <h6 class="mb-3"><span class="blank-amount">Please write some amount</span></h6>
+                        <button id="add-deposit" class="btn btn-success">Deposit</button>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="submit-area">
+                        <h4>Withdraw</h4>
+                        <input type="text" name="" id="withdrawAmount" placeholder="$ amount you want to withdraw"
+                            class="form-control mb-3">
+                        <h6 class="mb-3"><span class="blank-amount-withdraw">Please write some amount</span></h6>
+                        <h6 class="mb-3"><span class="insufficient-notice">Insufficient Balance</span> <span id="withdraw-limit">Available Balance <span id="withdraw-limit-number">00</span></span></h6>
+                        <button id="withdrawBtn" class="btn btn-success">Withdraw</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+
+    <script>
+  
+        // login area event handler 
+            let loginBtn = document.getElementById('submit');
+            loginBtn.addEventListener('click', function () {
+            // Variable Declaration
+            let loginContainer = document.getElementById('login-area');
+            let transactionArea = document.getElementById('transaction-area');
+            // Task
+            loginContainer.style.display = 'none';
+            transactionArea.style.display = 'block';
+            document.querySelector('.login-error').style.display = 'none';
+        })
+
+        
+        
+
+
+        // deposit button event handler 
+        let depositBtn = document.getElementById('add-deposit');
+
+        depositBtn.addEventListener('click', function () {
+            let depositAmount = document.getElementById('depositAmount').value;
+            let depositNumber = parseFloat(depositAmount);
+            let totalDeposit = document.getElementById('total-deposit').innerText;
+            let totalDepositNumber = parseFloat(totalDeposit);
+
+            if (depositNumber > 0) {
+                let balance = document.getElementById('balance').innerText
+                let balanceNumber = parseFloat(balance);
+
+                let totalBalance = depositNumber + balanceNumber;
+                let total = totalDepositNumber + depositNumber;
+                
+                document.getElementById('balance').innerText = totalBalance;
+                document.getElementById('total-deposit').innerText = total;
+                document.getElementById('depositAmount').value = '';
+                document.querySelector('.blank-amount').style.display = 'none';
+            }else{
+                let warning = document.querySelector('.blank-amount');
+                warning.style.display = 'block';
+            }
+
+        })
+
+
+        // Withdraw event handler 
+        const withdrawBtn = document.getElementById('withdrawBtn');
+        withdrawBtn.addEventListener('click', function(){
+            const withdrawAmount = document.getElementById('withdrawAmount').value;
+            const withdrawAmountNumber = parseFloat(withdrawAmount);
+            const totalWithdrawn = document.getElementById('totalWithdrawAmount').innerText;
+            const totalWithdrawnNumber = parseFloat(totalWithdrawn);
+            const balance = document.getElementById('balance').innerText;
+            const balanceNumber = parseFloat(balance);
+
+            if(withdrawAmountNumber > 0){
+                if(withdrawAmountNumber <= balanceNumber){
+                    
+                const finalTotalWithdrawn = totalWithdrawnNumber + withdrawAmountNumber;
+                const finalTotalBalance = balanceNumber - withdrawAmountNumber;
+
+                document.getElementById('totalWithdrawAmount').innerText = finalTotalWithdrawn;
+                document.getElementById('balance').innerText = finalTotalBalance;
+
+                document.getElementById('withdrawAmount').value = '';
+                document.querySelector('.blank-amount-withdraw').style.display = 'none';
+                document.querySelector('.insufficient-notice').style.display = 'none';
+                document.getElementById('withdraw-limit').style.display = 'none';
+                }else{
+                    document.querySelector('.insufficient-notice').style.display = 'inline-block';
+                    document.querySelector('.blank-amount-withdraw').style.display = 'none';
+                    document.getElementById('withdraw-limit-number').innerText = balanceNumber;
+                    document.getElementById('withdraw-limit').style.display = 'inline-block';
+
+                }
+
+            }else{
+                document.querySelector('.blank-amount-withdraw').style.display = 'block';
+            }
+
+        })
+ 
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,39 @@
+body{
+    padding: 100px;
+}
+
+/* Login form */
+.submit-area{
+    padding: 50px;
+    box-shadow: 5px 5px 10px gray;
+    border-radius: 10px;
+}
+
+/* Transaction area  */
+#transaction-area{
+    display: none;
+}
+.deposit, .balance, .withdraw {
+    margin: 30px;
+    padding: 25px;
+    border-radius: 10px;
+    color: #fff;
+}
+.deposit{
+    background-color: slateblue;
+}
+.withdraw{
+    background-color: salmon;
+}
+.balance{
+    background-color: orange;
+}
+.blank-amount, .blank-amount-withdraw, .login-error, .insufficient-notice{
+    display: none;
+    color: red;
+}
+#withdraw-limit{
+    color: green;
+    font-weight: bold;
+    display: none;
+}
